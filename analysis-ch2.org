@@ -1,0 +1,357 @@
+#+STARTUP: inlineimages
+#+STARTUP: nolatexpreview
+#+OPTIONS: ^:{}
+#+LATEX_HEADER: \usepackage{CJK}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LaTeX: \begin{CJK}{UTF8}{gbsn}
+
+#+TITLE: Analysis Chapter2 - Natural Number - Notes
+#+AUTHOR: Pengpeng Song
+#+DATE: 2022-01-28
+#+DESCRIPTION: Reading notes about Tao's Analysis
+
+#+LaTeX: \newtheoremstyle{noparens}%
+#+LaTeX:    {}{}%
+#+LaTeX:    {\itshape}{}%
+#+LaTeX:    {\bfseries}{ }%
+#+LaTeX:    { }%
+#+LaTeX:    {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}
+
+#+LATEX: \theoremstyle{noparens}
+#+LATEX: \newtheorem*{deff}{Definition}
+#+LATEX: \newtheorem{defn}{定义}[section]
+#+LATEX: \newtheorem{lem}[defn]{引理}
+#+LATEX: \newtheorem{axin}{公理}[section]
+#+LATEX: \newtheorem{assumn}{假设}[section]
+#+LATEX: \newtheorem{hypo}{命题}[section]
+
+* Definition of Natural Number - Peano Axioms
+
+#+begin_defn
+自然数是集合 $$N := \{ 0,1,2,3, ... \}$$
+以及一个增长 $++$ 运算。
+#+end_defn
+
+Peano Axioms[fn:1]:
+
+#+label: peano-axi-1
+#+begin_axin
+0 是一个自然数
+#+end_axin
+
+#+label: peano-axi-2
+#+begin_axin
+如果 n 是一个自然数，那么 $n++$ 也是一个自然数。
+#+end_axin
+
+#+label: peano-axi-3
+#+begin_axin
+对任意一个自然数 n，$n++ \ne 0$
+#+end_axin
+
+#+label: peano-axi-4
+#+begin_axin
+如果 n 和 m 是自然数，并且 $n \ne m$，那么 $n++ \ne m++$
+#+end_axin
+
+#+label: peano-axi-5
+#+attr_latex: :options [数学归纳法原理]
+#+begin_axin
+令 P(n)表示自然数 n 的任意一个性质，如果 P(0) 为真且 P(n) 为真时一定有 $P(n++)$ 也为真，那么对于任意自然数 n，P(n) 一定为真。
+#+end_axin
+
+注：
+- 此处的‘性质’具体指的是什么呢？
+- 这是一个公理，或者说公理模版，可以用来证明自然数的性质。
+
+#+attr_latex: :options [(非正式的)自然数系定义]
+#+begin_assumn
+存在一个数系 N，我们称 N 中的元素为自然数，而且上述五个公理对 N 均成立。
+#+end_assumn
+
+*只从上述五个公理和集合论的某些附加公理出发，就能够构造出其他所有数系、生成函数，并进行我们通常所做的全部代数和微积分研究。*
+
+
+* Addtion and Ordering of Natural Numbers
+
+** Definition of Addition
+#+attr_latex: :options [自然数的加法]
+#+begin_defn
+令 m 为一个自然数，我们定义 m 加上 0 为 $0 + m := m$ 。
+现在归纳地假设我们已经定义了如何把 m 加上 n，那么我们把 m 加上 $n++$ 定义为 $(n++) + m := (n + m) ++$。
+#+end_defn
+
+#+begin_lem
+对任意自然数 n，$n + 0 = n$ 恒成立。
+#+end_lem
+
+#+begin_proof
+TODO using induction.
+#+end_proof
+
+#+begin_lem
+对于任意自然数 n 和 m，有 $n + (m ++) = (n+ + m) ++$ 成立。
+#+end_lem
+
+#+begin_proof
+同理，由于还未证明加法的交换律，我们只能用归纳法证明。固定 m 对 n 做归纳。
+#+end_proof
+
+
+在上面两个引理的基础上就可以证明加法的交换律和结合律。
+
+** Commutativity and Associativity
+#+attr_latex: :options [加法交换律]
+#+begin_hypo
+对任意的自然数 n 和 m，有 $n + m = m + n$ 成立。
+#+end_hypo
+
+#+begin_proof
+固定 m 对 n 做归纳。
+#+end_proof
+
+#+attr_latex: :options [加法结合律]
+#+begin_hypo
+对任意自然数 a、b、c，有$(a + b) + c = a + (b + c)$ 成立。
+#+end_hypo
+
+#+attr_latex: :options [(习题 2.2.1)]
+#+begin_proof
+固定 b、c，对 a 做归纳。首先证明 a = 0 时结论成立，也就是需要证明 $(0 + b) + c = 0 + (b + c)$。
+根据加法的定义，$0 + b = b$，左边为$b + c$；同理，右边也等于$b + c$。于是基础情况成立。
+接下来归纳性的假设对任意 $(n + b) + c = n + (b + c)$，需要证明 $((n++) + b) + c = (n++) + (b + c)$ 成立。
+根据加法的定义，左边可以改写为：
+\begin{eqnarray*}
+\label{eq:1}
+((n++) + b) + c & = & ((n + b) ++) + c \\
+                & = & ((n + b) + c) ++
+\end{eqnarray*}
+同样的，根据加法定义，右边：
+\begin{eqnarray*}
+(n ++) + (b + c) & = & (n + (b + c)) ++
+\end{eqnarray*}
+根据归纳假设以及公理[[peano-axi-4]]，两边相等。
+#+end_proof
+
+
+** Cancellation Law for the Addition of Natural Numbers
+
+令 a、b、c 为三个任意自然数，且 $a + b = a + c$，那么 $b = c$ 成立。
+
+** Positive Number
+
+#+begin_defn
+当且仅当一个自然数 n 不等于 0 时，我们称 n 为正的。
+#+end_defn
+
+- a 是正的，b是自然数，那么 $a + b$ 是正的（固定 a，对 b 归纳）
+- a、b 是自然数且 $a + b = 0$，那么 $a = 0$ 并且 $b = 0$。
+
+#+attr_latex: :options [(习题 2.2.2)]
+#+begin_lem
+令 a 表示一个正自然数，那么恰好存在一个自然数 b 使得 $b++ = a$。
+#+end_lem
+
+#+attr_latex: :options [(习题 2.2.2)]
+#+begin_proof
+令 P(a) 为命题：如果 a 是正的，存在一个唯一的自然数 b 使得 $b++ = a$ 。
+基础情况，即 a = 0 的时候，这个命题是空虚地为真，因为 0 不是正的。
+现归纳的假设命题成立，我们需要证明: 存在一个唯一的自然数 b，使得 $b++ = a++$。
+这里需要证明两点：存在和唯一。
+存在：让 b := a，那么肯定有 $b++ = a++$。
+唯一：如果有个一个自然数 $c++ = a++$，根据公理[[peano-axi-4]]，c = a，但是已知 b = a，那么 b = c。
+#+end_proof
+
+** Ordering
+
+#+attr_latex: :options [自然数的序]
+#+begin_defn
+任意两个自然数 m 和 n，n 大于等于 m 记做$n \ge m$ 或$m \le n$。
+当且仅当存在自然数 a 使得 $n = m + a$，称 n 严格大于 m，记做$n \gt m$ 或者$m < n$，当且仅当 $n \ge m$ 且 $n \ne m$。
+#+end_defn
+
+#+label: 2.2.12
+#+begin_defn
+序的性质：
+- <<a>> 自反 :: a \ge a
+- <<b>> 传递 :: 如果 a \ge b 并且 b \ge c，那么 a \ge c
+- <<c>> 反对称 :: 如果 a \ge b 并且 b \ge a，那么 a = b。
+- <<d>> 加法保序 :: a \ge b，当且仅当$a + c \ge b + c$。
+- <<e>> a < b，当且仅当 a++ \le b
+- <<f>> a < b，当且仅当存在正自然数 d 使得$b = a + d$。
+- 三歧性 :: 对于任意自然数 a 和 b，下面三种表述中恰好有一种为真： a < b，a = b，a \gt b。
+#+end_defn
+
+
+#+attr_latex: :options [证明序的性质（习题 2.2.3 和 2.2.4）]
+#+begin_proof
+- 自反性
+  对于任意一个自然数 n，需要证明存在一个自然数 a 使得 $n = n + a$，令 a = 0 即可。
+- 传递
+  根据序的定义，a \ge b 及存在一个自然数 m 使得 $a = b + m$；同理，$b \ge c$ 也可以写成存在自然数 n 使得 $b = c + n$。
+  \begin{eqnarray}
+  a & = & b + m \\
+    & = & (c + n) + m \\
+    & = & c + (n + m)
+  \end{eqnarray}
+  因此根据序的定义，a \ge c。
+- 反对称
+- 加法保序
+- 序的三歧性
+#+end_proof
+
+
+
+#+attr_latex: :options [强归纳法原理（习题 2.2.5）]
+#+begin_hypo
+证明强归纳原理
+#+end_hypo
+
+
+#+attr_latex: :options [强归纳原理（习题 2.2.5）证明]
+#+begin_proof
+（根据提示）定义 Q 是关于自然数 n 的一个如下性质：P(m) 对任意满足 $m_{0} \le m < n$ 的 m 均成立。
+对 n 进行归纳。首先看基础情况，即 n = 0 时，需要证明 Q(0)，即 P(m) 对任意 $m_{0} \le m < 0$ 的 m 均为真。
+对于任意 $m_{0} \gt 0$ 的情况，m的取值范围为空，因此整个命题空虚的为真。
+对于 $m_{0} < 0$ 的情况，m'的取值范围是空的，仍然空虚的为真。
+因此基础情况成立。
+接下来归纳地假设 Q(n)成立，需要证明 $Q(n++)$ 也为真。要证明 P(m)对 $m_{0} \le m < n++$ 的 m 都为真。
+根据归纳假设对于任意的 $m_{0} \le m' < n$ 的 m'，P(m') 都成立，
+同时已知 $n++ = n + 1$ (为什么?)，根据自然数序的性质，可以写成 $n < n++$，
+
+即对于 $m_{0} \le m < n++$ 的 m 有两种情况，要么 $m_{0} \le m < n$ 要么 $m = n$。
+因为 $m < n++$ 蕴含着 $m++ \le n++$ (2.2.12-e)，也就蕴含着 $m \le n$ (2.2.12-d，加法保序)
+P(m')都成立，再加上 P 的性质，得出 $P(n++)$ 成立，即 $Q(n++)$ 也成立。
+#+end_proof
+
+
+#+attr_latex: :options [逆向归纳原理（习题 2.2.6）]
+#+begin_hypo
+令 n 是一个自然数，令 $P(m)$ 是关于自然数的一个性质且满足：只要 $P(m++)$ 为真，P(m)就为真。
+假设 P(n)为真，那么 P(m)对于任意满足 m \le n 的自然数 m 均为真。
+#+end_hypo
+
+#+attr_latex: :options [逆向归纳原理（习题 2.2.6）证明]
+#+begin_proof
+对 n 做归纳。
+首先看基础情况，即 n = 0 时，假设 P(0)为真，我们需要证明对于任意自然数 m \le 0 都为真，m只能等于 0，已知 P(0)为真。
+那么现在归纳地假设对于任意自然数 n，假设 P(n) 为真，对于任意自然数 m \le n 的 m，P(m)都为真。
+需要证明 $n++$ 对于命题也成立：假设 $P(n++)$ 成立，那么进一步需要证明 $m \le (n++)$ 的 m，P 都成立。
+根据 P 的性质，已知 $P(n++)$ 成立，那么 P(n) 成立，即 m \le n 的 m，P 都成立。因此我们仅需要证明 $m = n++$ 的情况，这正好是前提假设。
+It's important to show that if $m \le n++$ then either $m \le n$ or $m = n++$ .
+To proof this, we have to make use the properties of Orderings [[2.2.12]], specifically [[d]] and [[e]].
+#+end_proof
+
+
+* Multiplication of Natural Numbers
+
+** Definition of Multiplication
+
+#+attr_latex: :options [自然数的乘法]
+#+begin_defn
+令 m 表示任意自然数。定义 $0 \times m := 0$ 表示把 0 乘到 m 上。现归纳性地假设已经定义了如何把 n 乘到 m 上，
+那么我们可以通过定义 $(n++) \times m := (n \times m) + m$ 把 $n++$ 乘到 m 上。
+#+end_defn
+
+** Properties of Multiplication
+
+- 乘法可交换
+  n 和 m 是任意两个自然数，那么 $n \times m := m \times n$ 成立。（习题 2.3.1）
+
+  #+attr_latex: :options [乘法交换律（习题 2.3.1）]
+  #+begin_proof
+  证明策略：
+  1. 证明引理：对于任意自然数 n，$n \times 0 = 0$ 恒成立。（对 n 做归纳）
+     基础情况，$0 \times 0 = 0$ (根据乘法定义)
+     归纳的假设命题成立，需要证明 $n++ \times 0 = 0$ 也成立。
+     根据乘法定义： $(n++) \times 0 = (n \times 0) + 0$，根据归纳假设和加法的定义，右边等于 0。
+  2. 证明引理：对于任意自然数 m 和 n，$n \times (m++) = (n \times m) + n$ 恒成立。
+     固定 m，对 n 采用归纳法。
+     基础情况，必须证明 $0 \times (m++) = (0 \times m) + 0$ 成立。
+     根据乘法定义，左边等于 0。根据上一步引理得到右边也等于 0，因此基础情况成立。
+     接下来归纳地假设命题成立，需要证明：$(n++) \times (m++) = ((n++) \times m) + (n++)$ 成立。
+     左边：
+     \begin{eqnarray*}
+     \label{eq:2}
+     (n \times (m++)) + (m++) & = & (n \times m) + n + (m++) \\
+                         & = & (n \times m) + (n + (m++)) \\
+                         & = & (n \times m) + (n + m)++
+     \end{eqnarray*}
+     右边：
+     \begin{eqnarray*}
+     \label{eq:3}
+     ((n++) \times (m++)) + (n++) & = & (n \times m) + m + (n++)   \\
+                             & = & (n \times m) + (m + (n++)) \\
+                             & = & (n \times m) + (m + n)++
+     \end{eqnarray*}
+     左右两边相等。
+  3. 然后有了上面两个引理，就可以证明乘法的交换律。固定 m 对 n 采用归纳法。（略）
+  #+end_proof
+
+- 正自然数没有零因子（习题 2.3.2）
+
+  #+attr_latex: :options [正自然数没有 0 因子]
+  #+begin_lem
+  设 m、n 为自然数。那么 $n \times m = 0$，当且仅当 n 和 m 中至少有一个为 0。
+  特别地，如果 m 和 n 都为正的，那么 nm 也是正的。
+  #+end_lem
+
+  #+begin_proof
+  现证明第二部分，令 m 和 n 是任意两个正的自然数，那么存在两个自然数 a 和 b，使得 $m = a++$， $n = b++$，
+  那么 $m \times n = (a++) \times (b++) = ab + a + b + 1$，也就是正的。
+  第二部分略。
+  #+end_proof
+
+- 分配律
+- 结合律
+- 乘法保序
+- 乘法消去律
+
+
+
+** Eclidean Algorithm
+
+这个算法标志着*数论*的开端。
+
+#+attr_latex: :options [欧几里得算法]
+#+begin_hypo
+设 n 是一个自然数，q表示一个正自然数，那么存在自然数 m 和 r 使得 $0 \le r < q$ 且 $n = mq + r$。
+#+end_hypo
+
+#+begin_proof
+(固定 q 对 n 进行归纳)
+基础情况，n = 0 的情况，要证明： 存在自然数 m、r 使得 $0 \le r < q$ 且 $0 = mq + r$。
+使 m = 0， r = 0 即可以使得条件成立，基础情况成立。
+然后归纳的假设对于 n 时，存在 m 和 r 使得命题成立，需要证明： 存在自然数 m'和 r' 使得 $0 \le r' < q$ 且 $n++ = m' q + r'$ 。
+已知 $n = mq + r$ 且 $0 \le r < q$，两边都加上 1，得到 $n + 1 = mq + r + 1$ ，已知 $n+1 = n++$，因此 $n++ = mq + (r + 1)$，
+这里需要检查两种情况： $r + 1 < q$ 或者 $r + 1 = q$。
+- 对于第一种情况：让 m' = m，r' = r + 1 就完成了证明；
+- 对于第二种情况：可以将 r + 1 替换为 q，即 $n++ = mq + q$， 根据乘法分配律：$n++ = (m + 1)q$，即让 m' = m + 1， r' = 0 即可。
+这样就完成了归纳证明。
+#+end_proof
+
+** Exponentiation of Natural numbers
+
+#+attr_latex: :options [自然数的指数运算]
+#+begin_defn
+设 m 是一个自然数。我们定义 $m^{0}^{}^{}^{} := 1$ 表示把 m 升到 0 次幂；特别的，定义 $0^{0 }= 1$。
+现在递归的假设对于某个自然数 n，m^{n }已经被定义了，那么我们定义 $m^{n++} := m^{n} \times m$。
+#+end_defn
+
+
+
+* Thoughts
+- 存在性证明方式可以通过构造的方式实现
+- ‘恰好一个’需要现证明两部分：存在和唯一性
+- 对于蕴含关系（if p then q），如果前提假设为假，则整个命题‘空虚’地为真。
+- 归纳法即 peano 第五公理，这是一个公理，即不需要证明的前提。
+
+
+
+* Footnotes
+
+[fn:1] also known as *Dedekind-Peano axioms* or *Peano postulates*
+
+
+
+#+LATEX: \end{CJK}
