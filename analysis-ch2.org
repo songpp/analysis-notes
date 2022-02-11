@@ -322,11 +322,11 @@ To proof this, we have to make use the properties of Orderings [[2.2.12]], speci
 (固定 q 对 n 进行归纳)
 基础情况，n = 0 的情况，要证明： 存在自然数 m、r 使得 $0 \le r < q$ 且 $0 = mq + r$。
 使 m = 0， r = 0 即可以使得条件成立，基础情况成立。
-然后归纳的假设对于 n 时，存在 m 和 r 使得命题成立，需要证明： 存在自然数 m'和 r' 使得 $0 \le r' < q$ 且 $n++ = m' q + r'$ 。
+然后归纳的假设对于 n 时，存在 m 和 r 使得命题成立，需要证明： 存在自然数 $m'$ 和 $r'$ 使得 $0 \le r' < q$ 且 $n++ = m' q + r'$ 。
 已知 $n = mq + r$ 且 $0 \le r < q$，两边都加上 1，得到 $n + 1 = mq + r + 1$ ，已知 $n+1 = n++$，因此 $n++ = mq + (r + 1)$，
 这里需要检查两种情况： $r + 1 < q$ 或者 $r + 1 = q$。
-- 对于第一种情况：让 m' = m，r' = r + 1 就完成了证明；
-- 对于第二种情况：可以将 r + 1 替换为 q，即 $n++ = mq + q$， 根据乘法分配律：$n++ = (m + 1)q$，即让 m' = m + 1， r' = 0 即可。
+- 对于第一种情况：让 $m' = m$， $r' = r + 1$ 就完成了证明；
+- 对于第二种情况：可以将 $r + 1$ 替换为 q，即 $n++ = mq + q$， 根据乘法分配律：$n++ = (m + 1)q$，即让 $m' = m + 1$， $r' = 0$ 即可。
 这样就完成了归纳证明。
 #+end_proof
 
@@ -334,7 +334,7 @@ To proof this, we have to make use the properties of Orderings [[2.2.12]], speci
 
 #+attr_latex: :options [自然数的指数运算]
 #+begin_defn
-设 m 是一个自然数。我们定义 $m^{0}^{}^{}^{} := 1$ 表示把 m 升到 0 次幂；特别的，定义 $0^{0 }= 1$。
+设 m 是一个自然数。我们定义 $m^{0} := 1$ 表示把 m 升到 0 次幂；特别的，定义 $0^{0 }= 1$。
 现在递归的假设对于某个自然数 n，m^{n }已经被定义了，那么我们定义 $m^{n++} := m^{n} \times m$。
 #+end_defn
 
@@ -351,7 +351,6 @@ To proof this, we have to make use the properties of Orderings [[2.2.12]], speci
 * Footnotes
 
 [fn:1] also known as *Dedekind-Peano axioms* or *Peano postulates*
-
 
 
 #+LATEX: \end{CJK}

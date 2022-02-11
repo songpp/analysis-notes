@@ -1,0 +1,59 @@
+#+TITLE: Analysis Chpater3 - Set Theory
+#+STARTUP: inlineimages
+#+STARTUP: nolatexpreview
+#+OPTIONS: ^:{}
+#+LATEX_HEADER: \usepackage{CJK}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LaTeX: \begin{CJK}{UTF8}{gbsn}
+
+
+#+AUTHOR: Pengpeng Song
+#+DATE: <2022-02-03 四>
+#+DESCRIPTION: Reading notes about Tao's Analysis
+
+#+LaTeX: \newtheoremstyle{noparens}%
+#+LaTeX:    {}{}%
+#+LaTeX:    {\itshape}{}%
+#+LaTeX:    {\bfseries}{ }%
+#+LaTeX:    { }%
+#+LaTeX:    {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}
+
+#+LATEX: \theoremstyle{noparens}
+#+LATEX: \newtheorem*{deff}{Definition}
+#+LATEX: \newtheorem{defn}{定义}[section]
+#+LATEX: \newtheorem{lem}[defn]{引理}
+#+LATEX: \newtheorem{axin}{公理}[section]
+#+LATEX: \newtheorem{assumn}{假设}[section]
+#+LATEX: \newtheorem{hypo}{命题}[section]
+
+
+* Set Theory Basic Concepts
+
+#+name: (非正式的)集合的定义
+#+attr_latex: :options [(非正式的)集合的定义]
+#+begin_defn
+我们把 *集合 A* 定义为任意一堆没有次序的对象。
+如果 x 是集合 A 中的一个对象，我们说 x 是 A 中的 *元素* ，记做 $x \in A$；否则，$x \notin A$。
+#+end_defn
+
+
+#+begin_axin
+如果 A 是一个集合，那么 A 也是一个对象。即集合的元素可以是集合。
+#+end_axin
+
+#+begin_defn
+两个集合 A 和 B 是相等的，记做 $A = B$，当且仅当 A 中的每个元素都是 B 的元素并且 B 中的每个元素也都是 A 的元素。
+#+end_defn
+
+注意：证明两个集合相等时要证明 $\forall x \in A, x \in B$，以及 $\forall y \in B, y \in A$。
+
+#+attr_latex: :options [空集]
+#+begin_axin
+存在一个集合 $\emptyset$，被称为 *空集* ，它不包含任何元素。也就是对于任意的对象 x 均有 $x \notin \emptyset$。
+#+end_axin
+
+
+TODO
+
+
+#+latex: \end{CJK}
